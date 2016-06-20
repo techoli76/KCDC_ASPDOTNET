@@ -1,0 +1,43 @@
+Home Page
+    Get All Categories:	http://localhost:40001/api/category
+    Get One Category:	http://localhost:40001/api/category/{id} 
+        http://localhost:40001/api/category/1
+    Get Products For Category:	http://localhost:40001/api/category/{id}/products
+        http://localhost:40001/api/category/1/products
+Customer/Login
+    Get All Customers: http://localhost:40001/api/customer
+    Get One customer: http://localhost:40001/api/customer/{id}
+        http://localhost:40001/api/customer/1
+    Login: Decided not to implement this
+Product List
+    Get All Products With Category Name: http://localhost:40001/api/product
+    Get Featured Products With Category Name: http://localhost:40001/api/product/featured
+    Get One Product With Category Name: http://localhost:40001/api/product/{id}
+Search
+    Search Products: http://localhost:40001/api/search/{searchString} 
+        Note: encode spaces with %20
+        http://localhost:40001/api/search/persuade%20anyone
+Orders
+    Get Order History (With Details): http://localhost:40001/api/orders/{customerId}
+        http://localhost:40001/api/orders/1
+    Get One Order (With Details): http://localhost:40001/api/orders/{customerId}/{orderId}
+        http://localhost:40001/api/orders/1/1
+Shopping Cart
+    Get Cart: http://localhost:40001/api/shoppingcart/{customerId}
+        http://localhost:40001/api/shoppingcart/1
+    Get Cart Item: http://localhost:40001/api/shoppingcart/{customerId}/{id}
+        http://localhost:40001/api/shoppingcart/1/1
+    Add to Cart: http://localhost:40001/api/shoppingcart/{customerId} HTTPPost
+        Note: ProductId and Quantity in the body
+        http://localhost:40001/api/shoppingcart/1 {"ProductId":22,"Quantity":2}
+        Content-Type:application/json
+    Change Cart Item (Quantity): http://localhost:40001/api/shoppingcart/{customerId}/{id} HTTPPut
+        Note: Id, CustomerId, ProductId, TimeStamp, DateCreated, and Quantity in the body          
+		{"Id":1, "CustomerId":1, "ProductId":33, "Quantity":2, "TimeStamp":"AAAAAAAA86s=", "DateCreated":"1/20/2016"}
+
+    Remove Cart Item: http://localhost:40001/api/shoppingcart/{customerId}/{id}/{TimeStamp} HTTPDelete
+        http://localhost:40001/api/shoppingcart/1/2/AAAAAAAA1Uc=
+    Purchase:  http://localhost:40001/api/shoppingcart/{customerId}/buy HTTPPost
+        Note: Customer in the body
+        { "Id":1,"FullName":"Super Spy","EmailAddress":"spy@secrets.com"}
+        http://localhost:40001/api/shoppingcart/1/buy 

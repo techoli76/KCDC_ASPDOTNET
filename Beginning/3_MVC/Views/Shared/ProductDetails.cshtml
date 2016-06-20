@@ -1,0 +1,66 @@
+﻿@using SpyStore.MVC.DataAccess
+@using Microsoft.AspNetCore.Mvc.Routing
+@model AddToCartViewModel
+
+@Html.HiddenFor(model => model.Id)
+
+<h1 class="visible-xs">@Html.DisplayFor(x => x.ModelName)</h1>
+<div class="row product-details-container">
+    <div class="col-sm-6 product-images">
+        <img src="@Url.Content(WebAPICalls.ImageLocation+Model.ProductImageLarge)" />
+        <div class="key-label">PRODUCT IMAGES</div>
+    </div>
+    <div class="col-sm-6">
+        <h1 class="hidden-xs">@Html.DisplayFor(x => x.ModelName)</h1>
+
+        <div class="price-label">PRICE:</div><div class="price">@Html.DisplayFor(x => x.CurrentPrice)</div>
+
+        <div class="units">Only @Html.DisplayFor(x => x.UnitsInStock) left.</div>
+
+        <div class="product-description">
+            @Html.DisplayFor(x => x.Description)
+        </div>
+
+        <ul class="product-details">
+            <li>
+                <div class="key-label">MODEL NUMBER:</div> @Html.DisplayFor(x => x.ModelNumber)
+            </li>
+            <li>
+                <div class="key-label">CATEGORY:</div>
+                <a asp-controller="Category"
+                   asp-action="ProductList"
+                   asp-route-id="@Model.CategoryId"
+                   class="Category">@Model.CategoryName</a>
+            </li>
+        </ul>
+        @Html.HiddenFor(model => model.UnitsInStock)
+
+
+        <div class="row cart-group">
+            <label for="qty">QUANTITY:</label>
+            <input asp-for="Quantity" value="1" class="cart-quantity form-control" />
+            @if (!string.IsNullOrEmpty(ViewBag.CustomerId))
+            {
+                <input type="submit" value="Add to Cart" class="btn btn-primary" />
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login"
+                   asp-route-returnUrl="@Url.Action(new UrlActionContext
+                                    {
+                                        Controller = "Cart",
+                                        Action = "AddToCart",
+                                        Values = new
+                                        {
+                                            customerId = -1,
+                                            Id = Model.Id,
+                                            returnUrl = ViewBag.ReturnUrl
+                                        }
+                                    })"
+                   class="btn btn-primary">Add to Cart</a>
+            }
+        </div>
+        <span asp-validation-for="Quantity" class="text-danger" />
+        <a href="@ViewBag.ReturnURL">Back to List</a>
+    </div>
+</div>

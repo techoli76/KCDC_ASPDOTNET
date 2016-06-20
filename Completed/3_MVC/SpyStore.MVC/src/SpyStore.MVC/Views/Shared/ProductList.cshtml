@@ -1,0 +1,21 @@
+﻿@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model IEnumerable<ProductWithCategoryName>
+@{
+    ViewData["Title"] = ViewBag.Title;
+}
+<h3>@ViewBag.Header</h3>
+
+<div class="row">
+    @{
+        var count = Model.Count();
+        int x = -1;
+        foreach (var itm in Model)
+        {
+            x++;
+
+            @Html.DisplayFor(item => itm, new { x })
+        }
+    }
+</div>

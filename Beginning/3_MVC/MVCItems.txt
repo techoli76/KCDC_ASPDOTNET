@@ -1,0 +1,6 @@
+https://docs.asp.net/en/latest/client-side/bower.html
+install Microsoft.Extensions.CodeGenerators.MVC
+bower install MS.JQ.Unobtrusive.Ajax
+http://blogs.msdn.com/b/cdndevs/archive/2015/08/06/a-complete-guide-to-the-mvc-6-tag-helpers.aspx
+http://www.davepaquette.com/archive/2015/05/18/mvc6-select-tag-helper.aspx
+http://haacked.com/archive/2011/01/06/razor-syntax-quick-reference.aspx/

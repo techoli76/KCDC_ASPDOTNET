@@ -1,0 +1,25 @@
+﻿{
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "version": "1.0.0-rc2-3002702",
+      "type": "platform"
+    },
+    "SpyStore.Models": "1.0.0",
+    "SpyStore.DAL": "1.0.0",
+    "xunit": "2.1.0",
+    "dotnet-test-xunit": "1.0.0-rc2-build10015",
+    "Newtonsoft.Json": "8.0.4-beta1",
+    "AutoMapper": "4.2.1"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dotnet5.6",
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  },
+  "testRunner": "xunit",
+  "version": "1.0.0-*"
+}

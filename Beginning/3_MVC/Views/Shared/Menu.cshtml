@@ -1,0 +1,13 @@
+@using System.Collections.Generic
+@using System.Threading.Tasks
+@model IEnumerable<Category>
+<div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        @foreach (var item in Model)
+        {
+            <li><a asp-controller="Home"
+                   asp-action="Products" 
+                   asp-route-id="@item.Id">@item.CategoryName</a></li>
+        }
+    </ul>
+</div>

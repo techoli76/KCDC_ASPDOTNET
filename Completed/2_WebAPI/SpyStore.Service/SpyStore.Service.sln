@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6E55868D-667F-490E-AAFE-84304430DF10}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{901BAAD2-A05E-4638-934D-ED34356C7B47}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+		UsedAPICalls.txt = UsedAPICalls.txt
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SpyStore.Service", "src\SpyStore.Service\SpyStore.Service.xproj", "{B5236070-7344-4C70-BC8E-E724E6F08160}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5236070-7344-4C70-BC8E-E724E6F08160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5236070-7344-4C70-BC8E-E724E6F08160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5236070-7344-4C70-BC8E-E724E6F08160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5236070-7344-4C70-BC8E-E724E6F08160}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B5236070-7344-4C70-BC8E-E724E6F08160} = {6E55868D-667F-490E-AAFE-84304430DF10}
+	EndGlobalSection
+EndGlobal

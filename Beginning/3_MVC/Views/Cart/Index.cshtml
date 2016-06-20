@@ -1,0 +1,84 @@
+﻿@using System.Collections.Generic
+@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.AspNetCore.Mvc.Routing
+@using Newtonsoft.Json
+@using SpyStore.Models.ViewModels
+@using SpyStore.MVC.DataAccess
+@using SpyStore.MVC.Models.ViewModels
+@model CartViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    var cartTotal = 0M;
+    var returnUrl = ViewBag.ReturnURL ?? "/";
+}
+<h3>@ViewBag.Header</h3>
+<div class="table-responsive">
+    <table class="table table-bordered product-table">
+        <thead>
+        <tr>
+            <th style="width: 70%;">Product</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-right">Available</th>
+            <th class="text-right">Total</th>
+        </tr>
+        </thead>
+        @foreach (var item in Model.CartRecords)
+        {
+            cartTotal += item.LineItemTotal;
+            <tr id="row_@item.Id">
+                <td>
+                    <div class="product-cell-detail">
+                        <img src="@Url.Content(WebAPICalls.ImageLocation + item.ProductImageThumb)" class="pull-left" />
+                        <a class="h5" asp-controller="Product"
+                           asp-action="Details"
+                           asp-route-id="@item.ProductId"
+                           asp-route-returnUrl="@ViewBag.ReturnURL">@Html.DisplayFor(modelItem => item.ModelName)</a>
+                        <div class="small">@Html.DisplayFor(modelItem => item.CategoryName)</div>
+                        <div class="small text-muted">High-tech miniaturized extracting tool. Excellent for extricating foreign objects from your person. Good for picking up really tiny stuff, too! Cleverly disguised as a pair of tweezers.</div>
+                    </div>
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => item.CurrentPrice)
+                </td>
+                <td class="text-right cart-quantity-row">
+                    @Html.EditorFor(modelItem => item)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => item.UnitsInStock)
+                </td>
+                <td class="text-right cart-quantity-row">
+                    <span id="total_@item.ProductId">@Html.DisplayFor(modelItem => item.LineItemTotal)</span>
+                </td>
+            </tr>
+        }
+        <tfoot>
+        <tr>
+            <th><a href="@returnUrl">Back</a></th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>@Html.FormatValue(cartTotal, "{0:C2}")</th>
+        </tr>
+
+        </tfoot>
+    </table>
+    <form asp-controller="Cart" asp-action="Buy" asp-route-cutomerId="@ViewBag.CustomerId">
+        <input type="hidden" asp-for="@Model.Customer.Id" />
+        <input type="hidden" asp-for="@Model.Customer.EmailAddress" />
+        <input type="hidden" asp-for="@Model.Customer.Password" value="FillerData" />
+        <input type="hidden" asp-for="@Model.Customer.TimeStamp" />
+        <div class="pull-right">
+            <button class="btn btn-primary">Checkout</button>
+        </div>
+    </form>
+</div>
+    @section Scripts
+{
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+        <script language="javascript" type="text/javascript">
+
+        </script>
+    }

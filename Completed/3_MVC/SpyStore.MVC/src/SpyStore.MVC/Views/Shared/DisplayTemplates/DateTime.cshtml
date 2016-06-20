@@ -1,0 +1,18 @@
+﻿@using System
+@using System.Threading.Tasks
+@model DateTime?
+@if (Model == null || !Model.HasValue)
+{
+    @:Unknown
+}
+else
+{
+    if (ViewData.ModelMetadata.IsNullableValueType)
+    {
+        @:@(Model.Value.ToString("MM/dd/yyyy"))
+    }
+    else
+    {
+        @:@(((DateTime)Model).ToString("MM/dd/yyyy"))
+    }
+}

@@ -1,0 +1,49 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "version": "1.0.0-rc2-3002702",
+      "type": "platform"
+    },
+    "Microsoft.EntityFrameworkCore": "1.0.0-rc2-final",
+    "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.0.0-rc2-final",
+    "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview1-final",
+    "NETStandard.Library": "1.5.0-rc2-24027",
+    "System.Linq.Queryable": "4.0.1-rc2-24027",
+    "SpyStore.Models":  "1.0.0" 
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dotnet5.6",
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  },
+  "packOptions": {
+    "summary": "Data access layer.",
+    "owners": [ "Phil Japikse" ],
+    "releaseNotes": "Moved everything to RC2",
+    "requireLicenseAcceptance": false
+  },
+  "buildOptions": {
+    "preserveCompilationContext": true,
+    //set this to true to run migrations
+    "emitEntryPoint": true
+  },
+  "runtimeOptions": {
+    "gcServer": true
+  },
+  "tools": {
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "version": "1.0.0-preview1-final",
+      "type": "build",
+      "imports": [
+        "portable-net45+win8+dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  }
+}

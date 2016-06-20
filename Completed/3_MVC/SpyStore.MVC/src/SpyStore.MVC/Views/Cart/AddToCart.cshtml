@@ -1,0 +1,24 @@
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model AddToCartViewModel
+
+@{
+    ViewData["Title"] = "Add To Cart";
+}
+<h3>@ViewBag.Header</h3>
+<form asp-controller="Cart"
+      asp-action="AddToCart"
+      asp-route-customerId="@Model.CustomerId"
+      asp-route-returnUrl="@ViewBag.ReturnURL">
+@{
+    Html.RenderPartial("ProductDetails", @Model);
+}
+
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

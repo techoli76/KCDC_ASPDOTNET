@@ -1,0 +1,26 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model System.Boolean?
+@{
+	var list = new List<SelectListItem>();
+	if (ViewData.ModelMetadata.IsNullableValueType)
+	{
+		list.Add(new SelectListItem
+		{
+			Text = "",
+			Value = ""
+		});
+	}
+	list.Add(new SelectListItem
+	{
+		Text = "Yes",
+		Value = "true"
+	});
+	list.Add(new SelectListItem
+	{
+		Text = "No",
+		Value = "false"
+	});
+}
+@Html.DropDownList(ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty), list)
+

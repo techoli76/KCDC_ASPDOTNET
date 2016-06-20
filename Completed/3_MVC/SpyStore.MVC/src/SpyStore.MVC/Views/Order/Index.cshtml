@@ -1,0 +1,45 @@
+@using System.Collections.Generic
+@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using SpyStore.Models.ViewModels
+@model IEnumerable<OrderWithTotal>
+
+<h3>@ViewBag.Header</h3>
+
+@foreach (var item in Model)
+{
+    <div class="order-card">
+        <div class="order-card-heading">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label>Order Number</label>
+                    <a asp-action="Details"
+                       asp-route-customerId="@item.CustomerId"
+                       asp-route-orderId="@item.Id">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </a>
+                </div>
+                <div class="col-sm-2">
+                    <label>@Html.DisplayNameFor(modelItem => item.OrderDate)</label>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </div>
+                <div class="col-sm-3">
+                    <label>@Html.DisplayNameFor(modelItem => item.ShipDate)</label>
+                    @Html.DisplayFor(modelItem => item.ShipDate)
+                </div>
+                <div class="col-sm-3">
+                    <label>@Html.DisplayNameFor(modelItem=>item.ShipDate)</label>
+                    @Html.DisplayFor(modelItem => item.OrderTotal)
+                </div>
+                    <div class="col-sm-2 order-actions">
+                        <a asp-action="Details"
+                           asp-route-customerId="@item.CustomerId"
+                           asp-route-orderId="@item.Id"
+                           class="btn btn-primary">Order Details</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+}
+
+

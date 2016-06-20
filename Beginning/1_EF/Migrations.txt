@@ -1,0 +1,105 @@
+Directory: C:\GitHub\Responsive\CodeSamples\Chapter05-EF\Begin\SpyStore.Service
+cd SpyStore.DAL
+dotnet ef migrations add Initial -o EF\Migrations -c SpyStore.DAL.EF.SpyStoreContext
+dotnet ef database update Initial
+
+dotnet ef migrations add ModelCompleted -o EF\Migrations -c SpyStore.DAL.EF.SpyStoreContext 
+dotnet ef database update ModelCompleted
+
+
+dotnet ef migrations add Sproc -o EF\Migrations -c SpyStore.DAL.EF.SpyStoreContext
+dotnet ef database update Sproc
+
+dotnet ef migrations add Final -o EF\Migrations -c SpyStore.DAL.EF.SpyStoreContext
+dotnet ef database update Final
+
+
+
+-- =============================================
+-- Author:		Philip Japikse
+-- Create date: 
+-- Description:	
+-- =============================================
+CREATE FUNCTION Store.GetOrderTotal 
+(
+	@OrderId int
+)
+RETURNS money
+AS
+BEGIN
+	DECLARE @Result money
+
+	SELECT @Result = SUM(LineItemTotal) FROM OrderDetails WHERE OrderId = @OrderId;
+
+	RETURN @Result
+
+END
+GO
+
+
+			string sql = "CREATE FUNCTION Store.GetOrderTotal ( @OrderId INT ) " + 
+				"RETURNS MONEY BEGIN DECLARE @Result MONEY SELECT " + 
+				" @Result = SUM(LineItemTotal) FROM OrderDetails " + 
+				" WHERE OrderId = @OrderId; RETURN @Result END";
+			migrationBuilder.Sql(sql);
+
+
+protected override void Up(MigrationBuilder migrationBuilder)
+{
+	migrationBuilder.Sql(
+"CREATE PROCEDURE [Store].[PurchaseItemsInCart](@customerId INT = 0) AS BEGIN " +
+" SET NOCOUNT ON; " +
+" DECLARE @orderId INT;" +
+" INSERT INTO Store.Orders (CustomerId, OrderDate, ShipDate) " +
+"    VALUES(@customerId, GETDATE(), GETDATE()); " +
+" SET @orderId = SCOPE_IDENTITY(); " +
+" DECLARE @TranName VARCHAR(20);SELECT @TranName = 'CommitOrder'; " +
+"   BEGIN TRANSACTION @TranName; " +
+"   BEGIN TRY " +
+"       INSERT INTO Store.OrderDetails (OrderId, ProductId, Quantity, UnitCost) " +
+"       SELECT @orderId, ProductId, Quantity, p.CurrentPrice " +
+"       FROM Store.ShoppingCartRecords scr " +
+"          INNER JOIN Store.Products p ON p.Id = scr.ProductId " +
+"       WHERE CustomerId = @customerId; " +
+"       DELETE FROM Store.ShoppingCartRecords WHERE CustomerId = @customerId; " +
+"       COMMIT TRANSACTION @TranName; " +
+"       SELECT @orderId; " +
+"   END TRY " +
+"   BEGIN CATCH " +
+"       ROLLBACK TRANSACTION @TranName; " +
+"       SELECT -1; " +
+"   END CATCH; " +
+"END;");
+}
+
+protected override void Down(MigrationBuilder migrationBuilder)
+{
+	migrationBuilder.Sql("DROP PROCEDURE [Store].[PurchaseItemsInCart]");
+
+}
+
+
+CREATE TRIGGER Store.UpdateOrderTotal
+	ON [Store].[OrderDetails]
+	FOR DELETE, INSERT, UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON
+		DECLARE @OrderId INT;
+
+		DECLARE new_records_cursor CURSOR FOR 
+			SELECT DISTINCT OrderId FROM 
+			(SELECT OrderId FROM INSERTED UNION 
+			SELECT OrderId FROM DELETED) AS all_changes;
+		OPEN new_records_cursor;
+	
+		FETCH NEXT FROM new_records_cursor INTO @OrderID;
+		WHILE @@FETCH_STATUS = 0
+		BEGIN 
+			UPDATE Orders SET OrderTotalComputed = Store.GetOrderTotal(@OrderId) WHERE Id = @OrderID;
+			FETCH NEXT FROM new_records_cursor INTO @OrderID;
+		END;
+		CLOSE new_records_cursor;
+		DEALLOCATE new_records_cursor;
+
+	END;

@@ -1,0 +1,27 @@
+@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.AspNetCore.Mvc.Routing
+@using SpyStore.Models.ViewModels
+@using SpyStore.MVC.DataAccess
+@model AddToCartViewModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+@if (!string.IsNullOrEmpty(ViewBag.CustomerId))
+{
+    <form asp-controller="Cart"
+          asp-action="AddToCart"
+          asp-route-customerId="@ViewBag.CustomerId"
+          asp-route-returnUrl="@ViewBag.CartReturnUrl">
+        @Html.Partial("ProductDetails", Model)
+    </form>
+}
+else
+{
+   @Html.Partial("ProductDetails", Model);
+}
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}

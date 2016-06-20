@@ -1,0 +1,10 @@
+@using System.Collections.Generic
+@using System.Threading.Tasks
+@model IEnumerable<Category>
+<li><a asp-controller="Product" asp-action="Featured">Featured</a></li>
+@foreach (var item in Model)
+{
+    <li><a asp-controller="Category"
+            asp-action="ProductList"
+            asp-route-id="@item.Id">@item.CategoryName</a></li>
+}

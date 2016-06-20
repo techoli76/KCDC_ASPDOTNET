@@ -1,0 +1,17 @@
+﻿@using System.Collections.Generic
+@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using SpyStore.Models.Entities
+@using SpyStore.Models.ViewModels
+
+@model IEnumerable<ProductWithCategoryName>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="jumbotron">
+
+        <a asp-controller="Products" asp-action="Featured" class="btn btn-info btn-lg">View Featured Products &raquo;</a>
+    </div>
+@await Html.PartialAsync("ProductList", Model)
+
